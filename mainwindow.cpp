@@ -61,6 +61,9 @@ void MainWindow::showFlippedImage(cv::Mat image)
     cv::namedWindow("Flipped Image");
     cv::imshow("Flipped Image", result);
     cv::imwrite("flipped image.bmp", result);
+
+    //or
+    //flipImage(image);
 }
 
 void MainWindow::showGrayImage()
