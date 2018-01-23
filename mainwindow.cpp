@@ -26,7 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_show_cam, SIGNAL(clicked()),
             this, SLOT(showFrameWithColor()));
 
-
 }
 
 MainWindow::~MainWindow() {
@@ -106,11 +105,12 @@ int MainWindow::showCannyEdges() {
     // check if we succeeded
     if(!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
+        ui->label->setText("ERROR! Unable to open camera");
         return -1;
     }
     //--- GRAB AND WRITE LOOP
-    std::cout << "Start grabbing" << std::endl
-              << "Press any key to terminate" << std::endl;
+    std::cout << "Start grabbing" << std::endl;
+    ui->label->setText("Press any key to terminate");
     cv::Mat edges;
     cv::namedWindow("edges",1);
     for(;;) {
@@ -139,8 +139,8 @@ int MainWindow::showColoredFrame() {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
-    std::cout << "Start grabbing" << std::endl
-              << "Press any key to terminate" << std::endl;
+    std::cout << "Start grabbing" << std::endl;
+    ui->label->setText("Start grabbing colored video\nPress any key to terminate");
     cv::Mat edges;
     cv::namedWindow("frame",1);
     for(;;) {
@@ -149,6 +149,7 @@ int MainWindow::showColoredFrame() {
         // check if we succeeded
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
+            ui->label->setText("ERROR! blank frame grabbed");
             break;
         }
         cv::imshow("frame", frame);
