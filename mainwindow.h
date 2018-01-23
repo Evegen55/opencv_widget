@@ -17,8 +17,8 @@ public:
     ~MainWindow();
 
     void readImageExample();    
-    void showCannyEdges();
-    void showColoredFrame();
+    int showCannyEdges();
+    int showColoredFrame();
     
 public slots:
     void showFlippedImage(cv::Mat image);
