@@ -4,12 +4,8 @@
 #include <string>
 #include "actions_with_images.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+void MainWindow::readImageExample()
 {
-    ui->setupUi(this);
-    // read an image
     cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
     //if image has been read
     if (image.data) {
@@ -37,15 +33,24 @@ MainWindow::MainWindow(QWidget *parent) :
         //flip image
         //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
         connect(ui->btn_flip_image, SIGNAL(clicked()),
-                    this, SLOT(showFlippedImage(image)));
+                this, SLOT(showFlippedImage(image)));
 
         // get a gray-level image as responce for click() signal
         connect(ui->btn_gray_image, SIGNAL(clicked()),
-                    this, SLOT(showGrayImage()));
+                this, SLOT(showGrayImage()));
 
     } else {
         std::cout << "NO IMAGE";
     }
+}
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    // read an image
+    readImageExample();
 
 }
 
@@ -68,7 +73,7 @@ void MainWindow::showFlippedImage(cv::Mat image)
 
 void MainWindow::showGrayImage()
 {
-    cv::Mat gray= grayImage();
+    cv::Mat gray = grayImage();
     cv::namedWindow("Gray Image");
     cv::imshow("Gray Image", gray);
 }

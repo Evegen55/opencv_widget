@@ -16,6 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void readImageExample();
+    
 public slots:
     void showFlippedImage(cv::Mat image);
     void showGrayImage();
