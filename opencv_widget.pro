@@ -45,3 +45,4 @@ LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_re
 LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_imgproc331.dll
 LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_calib3d331.dll
 LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_features2d331.dll
+LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_videoio331.dll

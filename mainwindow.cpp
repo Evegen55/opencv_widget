@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <opencv2/opencv.hpp>
+
 #include <string>
 #include "actions_with_images.h"
 
@@ -35,10 +36,6 @@ void MainWindow::readImageExample()
         connect(ui->btn_flip_image, SIGNAL(clicked()),
                 this, SLOT(showFlippedImage(image)));
 
-        // get a gray-level image as responce for click() signal
-        connect(ui->btn_gray_image, SIGNAL(clicked()),
-                this, SLOT(showGrayImage()));
-
     } else {
         std::cout << "NO IMAGE";
     }
@@ -49,8 +46,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // get a gray-level image as responce for click() signal
+    connect(ui->btn_gray_image, SIGNAL(clicked()),
+            this, SLOT(showGrayImage()));
+
     // read an image
-    readImageExample();
+    //readImageExample();
+
+    // show canny edges when buttnon clicked
+    connect(ui->btn_canny_edges, SIGNAL(clicked()),
+            this, SLOT(showFrameWithCannyEdges()));
+
+    // show colored video from cam at index 0 when buttnon clicked
+    connect(ui->btn_show_cam, SIGNAL(clicked()),
+            this, SLOT(showFrameWithColor()));
+
 
 }
 
@@ -76,4 +87,77 @@ void MainWindow::showGrayImage()
     cv::Mat gray = grayImage();
     cv::namedWindow("Gray Image");
     cv::imshow("Gray Image", gray);
+}
+
+void MainWindow::showFrameWithColor()
+{
+    showColoredFrame();
+}
+
+void MainWindow::showFrameWithCannyEdges()
+{
+    showCannyEdges();
+}
+
+void MainWindow::showCannyEdges()
+{
+    //--- INITIALIZE VIDEOCAPTURE
+    cv::VideoCapture cap;
+    // open the default camera using default API
+    cap.open(0);
+    // OR advance usage: select any API backend
+    int deviceID = 0;             // 0 = open default camera
+    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
+    // open selected camera using selected API
+    cap.open(deviceID + apiID);
+    // check if we succeeded
+    if(cap.isOpened()) { // check if we succeeded
+        cv::Mat edges;
+        cv::namedWindow("edges",1);
+        for(;;)
+        {
+            cv::Mat frame;
+            cap >> frame; // get a new frame from camera
+            // check if we succeeded
+            if (frame.empty()) {
+                std::cerr << "ERROR! blank frame grabbed\n";
+                break;
+            }
+            cv::cvtColor(frame, edges, cv::COLOR_BGR2GRAY);
+            cv::GaussianBlur(edges, edges, cv::Size(7,7), 1.5, 1.5);
+            cv::Canny(edges, edges, 0, 30, 3);
+            cv::imshow("edges", edges);
+            if(cv::waitKey(30) >= 0) break;
+        }
+    }
+}
+
+void MainWindow::showColoredFrame()
+{
+    //--- INITIALIZE VIDEOCAPTURE
+    cv::VideoCapture cap;
+    // open the default camera using default API
+    cap.open(0);
+    // OR advance usage: select any API backend
+    int deviceID = 0;             // 0 = open default camera
+    int apiID = cv::CAP_ANY;      // 0 = autodetect default API
+    // open selected camera using selected API
+    cap.open(deviceID + apiID);
+    // check if we succeeded
+    if(cap.isOpened()) { // check if we succeeded
+        cv::Mat edges;
+        cv::namedWindow("frame",1);
+        for(;;)
+        {
+            cv::Mat frame;
+            cap >> frame; // get a new frame from camera
+            // check if we succeeded
+            if (frame.empty()) {
+                std::cerr << "ERROR! blank frame grabbed\n";
+                break;
+            }
+            cv::imshow("frame", frame);
+            if(cv::waitKey(30) >= 0) break;
+        }
+    }
 }

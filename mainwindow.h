@@ -16,11 +16,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void readImageExample();
+    void readImageExample();    
+    void showCannyEdges();
+    void showColoredFrame();
     
 public slots:
     void showFlippedImage(cv::Mat image);
     void showGrayImage();
+    void showFrameWithColor();
+    void showFrameWithCannyEdges();
 
 private:
     Ui::MainWindow *ui;
