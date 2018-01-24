@@ -26,6 +26,7 @@ public slots:
     void showGrayImage();
     void showFrameWithColor();
     void showFrameWithCannyEdges();
+    void openImageAndShowInTab();
 
 private:
     Ui::MainWindow *ui;

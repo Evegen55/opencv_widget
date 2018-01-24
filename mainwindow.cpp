@@ -30,6 +30,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_show_cam, SIGNAL(clicked()),
             this, SLOT(showFrameWithColor()));
 
+    // show colored video from cam at index 0 when buttnon clicked
+    connect(ui->btn_image_to_tab, SIGNAL(clicked()),
+            this, SLOT(openImageAndShowInTab()));
+
 }
 
 MainWindow::~MainWindow() {
@@ -59,6 +63,7 @@ void MainWindow::openImage() {
 
         //flip image
         //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
+        //No such slot MainWindow::showFlippedImage(image)
         connect(ui->btn_flip_image, SIGNAL(clicked()),
                 this, SLOT(showFlippedImage(image)));
     } else {
@@ -90,6 +95,21 @@ void MainWindow::showFrameWithColor() {
 
 void MainWindow::showFrameWithCannyEdges() {
     showCannyEdges();
+}
+
+void MainWindow::openImageAndShowInTab() {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+    cv::Mat image= cv::imread(fileName.toStdString());
+    //if image has been read
+    if (image.data) {
+        QImage img= QImage((const unsigned char*)(image.data), image.cols,image.rows,QImage::Format_RGB888);
+        // display on label
+        ui->label_for_image->setPixmap(QPixmap::fromImage(img));
+        // resize the label to fit the image
+        ui->label_for_image->resize(ui->label_for_image->pixmap()->size());
+    } else {
+        std::cout << "NO IMAGE";
+    }
 }
 
 int MainWindow::showCannyEdges() {
