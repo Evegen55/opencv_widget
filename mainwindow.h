@@ -19,6 +19,7 @@ public:
     void readImageExample();    
     int showCannyEdges();
     int showColoredFrame();
+    int showColoredCamInTab();
     
 public slots:
     void openImage();
@@ -27,6 +28,7 @@ public slots:
     void showFrameWithColor();
     void showFrameWithCannyEdges();
     void openImageAndShowInTab();
+    void getVideoFromCamShowInTab();
 
 private:
     Ui::MainWindow *ui;

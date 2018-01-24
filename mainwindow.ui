@@ -50,7 +50,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -137,6 +137,19 @@
       </property>
       <property name="text">
        <string>CannyEdges</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_show_cam_in_tab">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>10</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Show camera in tab</string>
       </property>
      </widget>
     </widget>
