@@ -59,7 +59,7 @@
      <widget class="QPushButton" name="btn_gray_image">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>200</x>
         <y>10</y>
         <width>75</width>
         <height>23</height>
@@ -72,14 +72,27 @@
      <widget class="QPushButton" name="btn_flip_image">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>40</y>
+        <x>100</x>
+        <y>10</y>
         <width>75</width>
         <height>23</height>
        </rect>
       </property>
       <property name="text">
        <string>Flip Image</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_open_image">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Open Image</string>
       </property>
      </widget>
     </widget>

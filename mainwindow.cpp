@@ -5,6 +5,8 @@
 #include <string>
 #include "actions_with_images.h"
 
+#include <QFileDialog>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
@@ -16,8 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(showGrayImage()));
 
     // read an image
-    //readImageExample();
 
+
+    connect(ui->btn_open_image, SIGNAL(clicked()),
+            this, SLOT(openImage()));
     // show canny edges when buttnon clicked
     connect(ui->btn_canny_edges, SIGNAL(clicked()),
             this, SLOT(showFrameWithCannyEdges()));
@@ -32,22 +36,18 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::readImageExample() {
-    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
+void MainWindow::openImage() {
+//    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
+    cv::Mat image= cv::imread(fileName.toStdString());
     //if image has been read
     if (image.data) {
-        // create image window named "My Image"
-        cv::namedWindow("My Image");
-        // show the image on window
-        cv::imshow("My Image", image);
+        cv::namedWindow("Original Image");
+        cv::imshow("Original Image", image);
 
         int imageHeight = image.size().height;
         int imageWidth = image.size().width;
-
-        std::cout << "size:\n"
-                  << "  height: " << imageHeight << "\n"
-                  << "  width: " << imageWidth
-                  << std::endl;
 
         //build QString object
         QString text = QString("size:\n  height: ")
@@ -61,10 +61,10 @@ void MainWindow::readImageExample() {
         //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
         connect(ui->btn_flip_image, SIGNAL(clicked()),
                 this, SLOT(showFlippedImage(image)));
-
     } else {
         std::cout << "NO IMAGE";
     }
+
 }
 
 void MainWindow::showFlippedImage(cv::Mat image) {
@@ -159,3 +159,5 @@ int MainWindow::showColoredFrame() {
     return 0;
 
 }
+
+

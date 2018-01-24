@@ -21,6 +21,7 @@ public:
     int showColoredFrame();
     
 public slots:
+    void openImage();
     void showFlippedImage(cv::Mat image);
     void showGrayImage();
     void showFrameWithColor();
