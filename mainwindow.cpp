@@ -16,24 +16,18 @@ MainWindow::MainWindow(QWidget *parent) :
     // get a gray-level image as responce for click() signal
     connect(ui->btn_gray_image, SIGNAL(clicked()),
             this, SLOT(showGrayImage()));
-
     // read an image
-
-
     connect(ui->btn_open_image, SIGNAL(clicked()),
             this, SLOT(openImage()));
     // show canny edges when buttnon clicked
     connect(ui->btn_canny_edges, SIGNAL(clicked()),
             this, SLOT(showFrameWithCannyEdges()));
-
     // show colored video from cam at index 0 when buttnon clicked
     connect(ui->btn_show_cam, SIGNAL(clicked()),
             this, SLOT(showFrameWithColor()));
-
     // show colored video from cam at index 0 when buttnon clicked
     connect(ui->btn_image_to_tab, SIGNAL(clicked()),
             this, SLOT(openImageAndShowInTab()));
-
     // show colored video from cam at index 0 when buttnon clicked
     connect(ui->btn_show_cam_in_tab, SIGNAL(clicked()),
             this, SLOT(getVideoFromCamShowInTab()));

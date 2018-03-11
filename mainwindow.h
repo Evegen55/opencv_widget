@@ -16,7 +16,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void readImageExample();    
+    void readImageExample();
     int showCannyEdges();
     int showColoredFrame();
     int showColoredCamInTab();
