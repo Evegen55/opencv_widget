@@ -7,46 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>768</width>
-    <height>1000</height>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Car media panel</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>220</y>
-      <width>221</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-   </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>220</y>
-      <width>221</width>
-      <height>81</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
       <width>768</width>
-      <height>211</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -152,19 +126,41 @@
        <string>Show camera in tab</string>
       </property>
      </widget>
+     <widget class="QLabel" name="labelForMessages">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>0</y>
+        <width>431</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_for_image">
+   <widget class="QLabel" name="labelForWebCamImages">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>370</y>
-      <width>47</width>
-      <height>13</height>
+      <x>64</x>
+      <y>120</y>
+      <width>640</width>
+      <height>480</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="fun.qrc">:/images/sadeness.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
@@ -189,6 +185,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="fun.qrc"/>
+ </resources>
  <connections/>
 </ui>

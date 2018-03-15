@@ -7,6 +7,13 @@
 
 #include <QFileDialog>
 
+#include <QtGlobal>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
@@ -39,7 +46,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::openImage() {
-//    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
+    //    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
     cv::Mat image= cv::imread(fileName.toStdString());
@@ -57,7 +64,7 @@ void MainWindow::openImage() {
                 .append("\n").append("  width: ")
                 .append(QString::number(imageWidth));
         //get the label from mainwindow.ui source
-        ui->label->setText(text);
+        ui->labelForMessages->setText(text);
 
         //flip image
         //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
@@ -102,9 +109,9 @@ void MainWindow::openImageAndShowInTab() {
     if (image.data) {
         QImage img= QImage((const unsigned char*)(image.data), image.cols,image.rows,QImage::Format_RGB888);
         // display on label
-        ui->label_for_image->setPixmap(QPixmap::fromImage(img));
+        ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
         // resize the label to fit the image
-        ui->label_for_image->resize(ui->label_for_image->pixmap()->size());
+        ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
     } else {
         std::cout << "NO IMAGE";
     }
@@ -127,12 +134,12 @@ int MainWindow::showCannyEdges() {
     // check if we succeeded
     if(!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
-        ui->label->setText("ERROR! Unable to open camera");
+        ui->labelForMessages->setText("ERROR! Unable to open camera");
         return -1;
     }
     //--- GRAB AND WRITE LOOP
     std::cout << "Start grabbing" << std::endl;
-    ui->label->setText("Press any key to terminate");
+    ui->labelForMessages->setText("Press any key to terminate");
     cv::Mat edges;
     cv::namedWindow("edges",1);
     for(;;) {
@@ -162,7 +169,7 @@ int MainWindow::showColoredFrame() {
         return -1;
     }
     std::cout << "Start grabbing" << std::endl;
-    ui->label->setText("Start grabbing colored video\nPress any key to terminate");
+    ui->labelForMessages->setText("Start grabbing colored video\nPress any key to terminate");
     cv::Mat edges;
     cv::namedWindow("frame",1);
     for(;;) {
@@ -171,7 +178,7 @@ int MainWindow::showColoredFrame() {
         // check if we succeeded
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
-            ui->label->setText("ERROR! blank frame grabbed");
+            ui->labelForMessages->setText("ERROR! blank frame grabbed");
             break;
         }
         cv::imshow("frame", frame);
@@ -182,36 +189,32 @@ int MainWindow::showColoredFrame() {
 
 }
 
-//TODO it doesn't work
 int MainWindow::showColoredCamInTab() {
     cv::VideoCapture cap;
     int deviceID = 0;             // 0 = open default camera
     int apiID = cv::CAP_ANY;      // 0 = autodetect default API
     cap.open(deviceID + apiID);
-    if(! cap.isOpened()) {
+    if(!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
-    std::cout << "Start grabbing" << std::endl;
-    ui->label->setText("Start grabbing colored video\nPress any key to terminate");
+    std::cout << "Start grabbing from webcam\n" << std::endl;
+    ui->labelForMessages->setText("Start grabbing colored video\nPress any key to terminate");
     for(;;) {
         cv::Mat frame;
         cap >> frame; // get a new frame from camera
         // check if we succeeded
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
-            ui->label->setText("ERROR! blank frame grabbed");
+            ui->labelForMessages->setText("ERROR! blank frame grabbed\n");
             break;
         }
-        QImage imgFrame= QImage((const unsigned char*)(frame.data), frame.cols,frame.rows,QImage::Format_RGB888);
-        // display on label
-        ui->label_for_image->setPixmap(QPixmap::fromImage(imgFrame));
-        // resize the label to fit the image
-        ui->label_for_image->resize(ui->label_for_image->pixmap()->size());
+        //we really need to convert frame in order to adopt frame data to QImage
+        cv::cvtColor(frame, frame, CV_BGR2RGB);
+        QImage imgFrame = QImage((const unsigned char*)(frame.data), frame.cols,frame.rows,QImage::Format_RGB888);
+        // display on label with pre-defined size
+        ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(imgFrame));
         if(cv::waitKey(30) >= 0) break;
     }
-
     return 0;
 }
-
-
