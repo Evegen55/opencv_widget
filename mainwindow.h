@@ -16,7 +16,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void readImageExample();
     int showCannyEdges();
     int showColoredFrame();
     int showColoredCamInTab();
@@ -29,6 +28,7 @@ public slots:
     void showFrameWithCannyEdges();
     void openImageAndShowInTab();
     void getVideoFromCamShowInTab();
+    void flipImageInTab(cv::Mat &image);
 
 private:
     Ui::MainWindow *ui;

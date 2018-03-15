@@ -6,13 +6,3 @@ cv::Mat grayImage() {
     // return it
     return ima;
 }
-
-
-void flipImage(cv::Mat image)
-{
-    cv::Mat result;
-    cv::flip(image,result,1);
-    cv::namedWindow("Flipped Image");
-    cv::imshow("Flipped Image", result);
-    cv::imwrite("flipped image.bmp", result);
-}

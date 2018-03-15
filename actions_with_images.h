@@ -4,6 +4,5 @@
 #include <opencv2/opencv.hpp>
 
 cv::Mat grayImage();
-void flipImage(cv::Mat image);
 
 #endif // OTHER_FUNCTIONSCPP_H

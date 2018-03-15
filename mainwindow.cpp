@@ -47,9 +47,8 @@ MainWindow::~MainWindow() {
 
 void MainWindow::openImage() {
     //    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
-
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    cv::Mat image= cv::imread(fileName.toStdString());
+    cv::Mat image = cv::imread(fileName.toStdString());
     //if image has been read
     if (image.data) {
         cv::namedWindow("Original Image");
@@ -65,12 +64,6 @@ void MainWindow::openImage() {
                 .append(QString::number(imageWidth));
         //get the label from mainwindow.ui source
         ui->labelForMessages->setText(text);
-
-        //flip image
-        //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
-        //No such slot MainWindow::showFlippedImage(image)
-        connect(ui->btn_flip_image, SIGNAL(clicked()),
-                this, SLOT(showFlippedImage(image)));
     } else {
         std::cout << "NO IMAGE";
     }
@@ -83,9 +76,18 @@ void MainWindow::showFlippedImage(cv::Mat image) {
     cv::namedWindow("Flipped Image");
     cv::imshow("Flipped Image", result);
     cv::imwrite("flipped image.bmp", result);
+}
 
-    //or
-    //flipImage(image);
+void MainWindow::flipImageInTab(cv::Mat &image)
+{
+    cv::Mat result;
+    cv::flip(image,result,1);
+    //cv::cvtColor(result, result, CV_BGR2RGB);
+    QImage img= QImage((const unsigned char*)(result.data), result.cols,result.rows,QImage::Format_RGB888);
+    // display on label
+    ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
+    // resize the label to fit the image
+    ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
 }
 
 void MainWindow::showGrayImage() {
@@ -107,11 +109,18 @@ void MainWindow::openImageAndShowInTab() {
     cv::Mat image= cv::imread(fileName.toStdString());
     //if image has been read
     if (image.data) {
+        cv::cvtColor(image, image, CV_BGR2RGB);
         QImage img= QImage((const unsigned char*)(image.data), image.cols,image.rows,QImage::Format_RGB888);
         // display on label
         ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
         // resize the label to fit the image
         ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
+
+        //flip image by clicking button
+        //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
+        //No such slot MainWindow::showFlippedImage(image)
+        connect(ui->btn_flip_image, SIGNAL(clicked()),
+                this, SLOT(flipImageInTab(image)));
     } else {
         std::cout << "NO IMAGE";
     }
@@ -200,8 +209,12 @@ int MainWindow::showColoredCamInTab() {
     }
     std::cout << "Start grabbing from webcam\n" << std::endl;
     ui->labelForMessages->setText("Start grabbing colored video\nPress any key to terminate");
+
+    // resize the label to fit the image
+    cv::Mat frame;
+    cap >> frame; // get a new frame from camera
+    ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
     for(;;) {
-        cv::Mat frame;
         cap >> frame; // get a new frame from camera
         // check if we succeeded
         if (frame.empty()) {
