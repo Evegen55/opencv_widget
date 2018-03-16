@@ -22,16 +22,20 @@ public:
     
 public slots:
     void openImage();
-    void showFlippedImage(cv::Mat image);
     void showGrayImage();
     void showFrameWithColor();
     void showFrameWithCannyEdges();
     void openImageAndShowInTab();
     void getVideoFromCamShowInTab();
-    void flipImageInTab(cv::Mat &image);
+    void showFlippedImage(cv::Mat image);
+    void flipImageInTab(cv::Mat image);
+
+private slots:
+    void on_btn_image_to_tab_clicked();
 
 private:
     Ui::MainWindow *ui;
+    cv::Mat imageToFlip;
 };
 
 #endif // MAINWINDOW_H

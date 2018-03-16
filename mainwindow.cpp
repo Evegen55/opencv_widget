@@ -78,7 +78,7 @@ void MainWindow::showFlippedImage(cv::Mat image) {
     cv::imwrite("flipped image.bmp", result);
 }
 
-void MainWindow::flipImageInTab(cv::Mat &image)
+void MainWindow::flipImageInTab(cv::Mat image)
 {
     cv::Mat result;
     cv::flip(image,result,1);
@@ -106,24 +106,29 @@ void MainWindow::showFrameWithCannyEdges() {
 
 void MainWindow::openImageAndShowInTab() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    cv::Mat image= cv::imread(fileName.toStdString());
+    imageToFlip = cv::imread(fileName.toStdString());
     //if image has been read
-    if (image.data) {
-        cv::cvtColor(image, image, CV_BGR2RGB);
-        QImage img= QImage((const unsigned char*)(image.data), image.cols,image.rows,QImage::Format_RGB888);
+    if (imageToFlip.data) {
+        cv::cvtColor(imageToFlip, imageToFlip, CV_BGR2RGB);
+        QImage img= QImage((const unsigned char*)(imageToFlip.data),
+                           imageToFlip.cols,imageToFlip.rows,QImage::Format_RGB888);
         // display on label
         ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
         // resize the label to fit the image
         ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
 
         //flip image by clicking button
-        //TODO why showFlippedImage(image) doesn't work but showGrayImage() works fine with button?
-        //No such slot MainWindow::showFlippedImage(image)
         connect(ui->btn_flip_image, SIGNAL(clicked()),
-                this, SLOT(flipImageInTab(image)));
+                this, SLOT(on_btn_image_to_tab_clicked()));
     } else {
         std::cout << "NO IMAGE";
     }
+}
+
+void MainWindow::on_btn_image_to_tab_clicked()
+{
+    //TODO return image and set it as private - to flip again
+    flipImageInTab(imageToFlip);
 }
 
 void MainWindow::getVideoFromCamShowInTab() {
