@@ -14,6 +14,8 @@
 #include <QtGui>
 #endif
 
+//#include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
@@ -22,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // get a gray-level image as responce for click() signal
     connect(ui->btn_gray_image, SIGNAL(clicked()),
-            this, SLOT(showGrayImage()));
+            this, SLOT(showGrayImageAsOpeCVFrame()));
     // read an image
     connect(ui->btn_open_image_as_opencv_frame, SIGNAL(clicked()),
             this, SLOT(openImageAsOpeCVFrame()));
@@ -38,6 +40,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // show colored video from cam at index 0 when buttnon clicked
     connect(ui->btn_show_cam_in_tab, SIGNAL(clicked()),
             this, SLOT(getVideoFromCamShowInTab()));
+    //flip image by clicking button
+    connect(ui->btn_flip_image, SIGNAL(clicked()),
+            this, SLOT(on_btn_image_to_tab_clicked()));
 
 }
 
@@ -65,7 +70,7 @@ void MainWindow::openImageAsOpeCVFrame() {
         //get the label from mainwindow.ui source
         ui->labelForMessages->setText(text);
     } else {
-        std::cout << "NO IMAGE";
+        qDebug() << QString("NO IMAGE %1").arg(fileName);
     }
 
 }
@@ -80,7 +85,7 @@ void MainWindow::openImageAsOpeCVFrame() {
 
 
 
-void MainWindow::showGrayImage() {
+void MainWindow::showGrayImageAsOpeCVFrame() {
     cv::Mat gray = grayImage();
     cv::namedWindow("Gray Image");
     cv::imshow("Gray Image", gray);
@@ -100,28 +105,23 @@ void MainWindow::openImageAndShowInTab() {
     //if image has been read
     if (imageForActionsInTab.data) {
         cv::cvtColor(imageForActionsInTab, imageForActionsInTab, CV_BGR2RGB);
-        QImage img= QImage((const unsigned char*)(imageForActionsInTab.data),
+        QImage qimg= QImage((const unsigned char*)(imageForActionsInTab.data),
                            imageForActionsInTab.cols,imageForActionsInTab.rows,QImage::Format_RGB888);
         // display on label
-        ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
+        ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(qimg));
         // resize the label to fit the image
-        ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
-
-        //flip image by clicking button
-        connect(ui->btn_flip_image, SIGNAL(clicked()),
-                this, SLOT(on_btn_image_to_tab_clicked()));
+        ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());        
     } else {
-        std::cout << "NO IMAGE";
+        qDebug() << QString("Image %1 has no data or can't being read").arg(fileName);
     }
 }
 
 void MainWindow::on_btn_image_to_tab_clicked()
 {
-    //TODO return image and set it as private - to flip again
-    flipImageInTab(imageForActionsInTab);
+    imageForActionsInTab = flipImageInTab(imageForActionsInTab);
 }
 
-void MainWindow::flipImageInTab(cv::Mat image)
+cv::Mat MainWindow::flipImageInTab(cv::Mat image)
 {
     cv::Mat result;
     cv::flip(image,result,1);
@@ -131,7 +131,7 @@ void MainWindow::flipImageInTab(cv::Mat image)
     ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
     // resize the label to fit the image
     ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
-    imageForActionsInTab = result;
+    return result;
 }
 
 

@@ -23,7 +23,7 @@ public:
 public slots:
     void openImageAsOpeCVFrame();
     void openImageAndShowInTab();
-    void showGrayImage();
+    void showGrayImageAsOpeCVFrame();
     void showFrameWithColor();
     void showFrameWithCannyEdges();    
     void getVideoFromCamShowInTab();
@@ -34,7 +34,7 @@ private slots:
     void on_btn_image_to_tab_clicked();
 
 private:
-    void flipImageInTab(cv::Mat image);
+    cv::Mat flipImageInTab(cv::Mat image);
     Ui::MainWindow *ui;
     cv::Mat imageForActionsInTab;
 };
