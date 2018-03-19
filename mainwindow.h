@@ -21,21 +21,22 @@ public:
     int showColoredCamInTab();
     
 public slots:
-    void openImage();
+    void openImageAsOpeCVFrame();
+    void openImageAndShowInTab();
     void showGrayImage();
     void showFrameWithColor();
-    void showFrameWithCannyEdges();
-    void openImageAndShowInTab();
+    void showFrameWithCannyEdges();    
     void getVideoFromCamShowInTab();
-    void showFlippedImage(cv::Mat image);
-    void flipImageInTab(cv::Mat image);
+    //void showFlippedImage(cv::Mat image);
+
 
 private slots:
     void on_btn_image_to_tab_clicked();
 
 private:
+    void flipImageInTab(cv::Mat image);
     Ui::MainWindow *ui;
-    cv::Mat imageToFlip;
+    cv::Mat imageForActionsInTab;
 };
 
 #endif // MAINWINDOW_H

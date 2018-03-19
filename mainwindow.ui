@@ -30,57 +30,57 @@
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
-     <widget class="QPushButton" name="btn_gray_image">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>10</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Gray Image</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_flip_image">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>10</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Flip Image</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_open_image">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>10</y>
-        <width>80</width>
-        <height>21</height>
+        <width>341</width>
+        <height>23</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Open Image</string>
-      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="btn_open_image_as_opencv_frame">
+         <property name="text">
+          <string> Open image in OpenCV frame</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_gray_image">
+         <property name="text">
+          <string>Write Gray Image in OpenCV frame</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QPushButton" name="btn_image_to_tab">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>40</y>
-        <width>161</width>
-        <height>21</height>
+        <width>341</width>
+        <height>23</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Open Image and show in tab</string>
-      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="btn_image_to_tab">
+         <property name="text">
+          <string>Open Image and show in tab</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_flip_image">
+         <property name="text">
+          <string>Flip Image in tab</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">

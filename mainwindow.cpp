@@ -24,8 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_gray_image, SIGNAL(clicked()),
             this, SLOT(showGrayImage()));
     // read an image
-    connect(ui->btn_open_image, SIGNAL(clicked()),
-            this, SLOT(openImage()));
+    connect(ui->btn_open_image_as_opencv_frame, SIGNAL(clicked()),
+            this, SLOT(openImageAsOpeCVFrame()));
     // show canny edges when buttnon clicked
     connect(ui->btn_canny_edges, SIGNAL(clicked()),
             this, SLOT(showFrameWithCannyEdges()));
@@ -45,7 +45,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::openImage() {
+void MainWindow::openImageAsOpeCVFrame() {
     //    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
     cv::Mat image = cv::imread(fileName.toStdString());
@@ -70,25 +70,15 @@ void MainWindow::openImage() {
 
 }
 
-void MainWindow::showFlippedImage(cv::Mat image) {
-    cv::Mat result;
-    cv::flip(image,result,1);
-    cv::namedWindow("Flipped Image");
-    cv::imshow("Flipped Image", result);
-    cv::imwrite("flipped image.bmp", result);
-}
+//void MainWindow::showFlippedImage(cv::Mat image) {
+//    cv::Mat result;
+//    cv::flip(image,result,1);
+//    cv::namedWindow("Flipped Image");
+//    cv::imshow("Flipped Image", result);
+//    cv::imwrite("flipped image.bmp", result);
+//}
 
-void MainWindow::flipImageInTab(cv::Mat image)
-{
-    cv::Mat result;
-    cv::flip(image,result,1);
-    //cv::cvtColor(result, result, CV_BGR2RGB);
-    QImage img= QImage((const unsigned char*)(result.data), result.cols,result.rows,QImage::Format_RGB888);
-    // display on label
-    ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
-    // resize the label to fit the image
-    ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
-}
+
 
 void MainWindow::showGrayImage() {
     cv::Mat gray = grayImage();
@@ -106,12 +96,12 @@ void MainWindow::showFrameWithCannyEdges() {
 
 void MainWindow::openImageAndShowInTab() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
-    imageToFlip = cv::imread(fileName.toStdString());
+    imageForActionsInTab = cv::imread(fileName.toStdString());
     //if image has been read
-    if (imageToFlip.data) {
-        cv::cvtColor(imageToFlip, imageToFlip, CV_BGR2RGB);
-        QImage img= QImage((const unsigned char*)(imageToFlip.data),
-                           imageToFlip.cols,imageToFlip.rows,QImage::Format_RGB888);
+    if (imageForActionsInTab.data) {
+        cv::cvtColor(imageForActionsInTab, imageForActionsInTab, CV_BGR2RGB);
+        QImage img= QImage((const unsigned char*)(imageForActionsInTab.data),
+                           imageForActionsInTab.cols,imageForActionsInTab.rows,QImage::Format_RGB888);
         // display on label
         ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
         // resize the label to fit the image
@@ -128,8 +118,23 @@ void MainWindow::openImageAndShowInTab() {
 void MainWindow::on_btn_image_to_tab_clicked()
 {
     //TODO return image and set it as private - to flip again
-    flipImageInTab(imageToFlip);
+    flipImageInTab(imageForActionsInTab);
 }
+
+void MainWindow::flipImageInTab(cv::Mat image)
+{
+    cv::Mat result;
+    cv::flip(image,result,1);
+    //cv::cvtColor(result, result, CV_BGR2RGB);
+    QImage img= QImage((const unsigned char*)(result.data), result.cols,result.rows,QImage::Format_RGB888);
+    // display on label
+    ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
+    // resize the label to fit the image
+    ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
+    imageForActionsInTab = result;
+}
+
+
 
 void MainWindow::getVideoFromCamShowInTab() {
     showColoredCamInTab();
