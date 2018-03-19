@@ -157,7 +157,7 @@ int MainWindow::showCannyEdges() {
         return -1;
     }
     //--- GRAB AND WRITE LOOP
-    std::cout << "Start grabbing" << std::endl;
+    qDebug() << QString("Start grabbing from cam with deviceId %1 ").arg(deviceID + apiID);
     ui->labelForMessages->setText("Press any key to terminate");
     cv::Mat edges;
     cv::namedWindow("edges",1);
@@ -187,7 +187,7 @@ int MainWindow::showColoredFrame() {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
-    std::cout << "Start grabbing" << std::endl;
+    qDebug() << QString("Start grabbing from cam with deviceId %1 ").arg(deviceID + apiID);
     ui->labelForMessages->setText("Start grabbing colored video\nPress any key to terminate");
     cv::Mat edges;
     cv::namedWindow("frame",1);
@@ -217,7 +217,7 @@ int MainWindow::showColoredCamInTab() {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
-    std::cout << "Start grabbing from webcam\n" << std::endl;
+    qDebug() << QString("Start grabbing from cam with deviceId %1 ").arg(deviceID + apiID);
     ui->labelForMessages->setText("Start grabbing colored video\nPress any key to terminate");
 
     // resize the label to fit the image
