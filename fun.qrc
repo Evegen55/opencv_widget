@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/" >
         <file>images/sadeness.jpg</file>
+        <file>styles/qtabwidgetstyle.qss</file>
     </qresource>
 </RCC>

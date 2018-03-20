@@ -110,9 +110,9 @@ void MainWindow::openImageAndShowInTab() {
                      imageForActionsInTab.cols,imageForActionsInTab.rows,
                      QImage::Format_RGB888);
         // display on label
-        ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(qimg));
+        ui->labelForStaticPictures->setPixmap(QPixmap::fromImage(qimg));
         // resize the label to fit the image
-        ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());        
+        ui->labelForStaticPictures->resize(ui->labelForStaticPictures->pixmap()->size());
     } else {
         qDebug() << QString("Image %1 has no data or can't being read").arg(fileName);
     }
@@ -130,9 +130,9 @@ cv::Mat MainWindow::flipImageInTab(cv::Mat image)
     //cv::cvtColor(result, result, CV_BGR2RGB);
     QImage img= QImage((const unsigned char*)(result.data), result.cols,result.rows,QImage::Format_RGB888);
     // display on label
-    ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(img));
+    ui->labelForStaticPictures->setPixmap(QPixmap::fromImage(img));
     // resize the label to fit the image
-    ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
+//    ui->labelForStaticPictures->resize(ui->labelForStaticPictures->pixmap()->size());
     return result;
 }
 
