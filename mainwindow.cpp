@@ -103,8 +103,12 @@ void MainWindow::openImageAndShowInTab() {
     //if image has been read
     if (imageForActionsInTab.data) {
         cv::cvtColor(imageForActionsInTab, imageForActionsInTab, CV_BGR2RGB);
-        QImage qimg= QImage((const unsigned char*)(imageForActionsInTab.data),
-                           imageForActionsInTab.cols,imageForActionsInTab.rows,QImage::Format_RGB888);
+        //It creates an object with automatic storage duration.
+        //It is created, used, and then goes out of scope when the current block ({ ... }) ends.
+        //It's the simplest way to create an object, and is just the same as when you write int x = 0;
+        QImage qimg ((const unsigned char*)(imageForActionsInTab.data),
+                     imageForActionsInTab.cols,imageForActionsInTab.rows,
+                     QImage::Format_RGB888);
         // display on label
         ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(qimg));
         // resize the label to fit the image
