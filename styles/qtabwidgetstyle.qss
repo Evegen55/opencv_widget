@@ -1,0 +1,45 @@
+QTabBar#tabBar{
+    left: 10px; /* move to the right by 5px */
+    border-bottom: none;
+}
+
+QTabBar::tab {
+    background-color: rgb(194, 180, 180);
+    border-top: 2px solid rgb(107, 102, 102);
+    border-left: 2px solid rgb(107, 102, 102);
+    border-right: 2px solid rgb(107, 102, 102);
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: -8px;
+    border-bottom-right-radius: -8px;
+    min-width: 100px;
+    max-width: 100px;
+    height: 35px;
+    padding: 2px;
+}
+
+QTabBar::tab:hover {
+    background-color: rgb(216, 209, 209);
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(243, 231, 231);
+    border-color: rgb(0, 0, 0);
+ }
+
+QTabBar::scroller { /* the width of the scroll buttons */
+     border: none;
+    width: 20px;
+    background-color: rgba(0,0,0,55);
+}
+
+QTabBar::tear {
+    border: none;
+    background-color: rgba(222,221,15, 45);
+   width: 0px;
+}
+
+QTabBar::tab:disabled {
+    border: none;
+}
