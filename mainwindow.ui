@@ -25,7 +25,8 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Sitka Banner</family>
+      <pointsize>15</pointsize>
      </font>
     </property>
     <property name="styleSheet">
@@ -121,11 +122,26 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
 }</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
+    <widget class="QWidget" name="tab_for_navigation">
+     <attribute name="title">
+      <string>Maps and Routes</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_for_media_player">
+     <attribute name="title">
+      <string>Media Player</string>
+     </attribute>
+    </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Images</string>
+      <string>Web</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_for_images">
+     <attribute name="title">
+      <string>Photos</string>
      </attribute>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
@@ -184,21 +200,21 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
        <rect>
         <x>10</x>
         <y>80</y>
-        <width>641</width>
-        <height>401</height>
+        <width>201</width>
+        <height>301</height>
        </rect>
       </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="fun.qrc">:/images/sadeness.jpg</pixmap>
+       <pixmap resource="fun.qrc">:/images/patrik.jpg</pixmap>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="tab_for_smart_things">
      <attribute name="title">
-      <string>Webcams</string>
+      <string>SmartScreen</string>
      </attribute>
      <widget class="QPushButton" name="btn_show_cam">
       <property name="geometry">
@@ -261,7 +277,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
         <x>50</x>
         <y>70</y>
         <width>640</width>
-        <height>480</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="text">
@@ -275,6 +291,30 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_for_settings">
+     <attribute name="title">
+      <string>Setting</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>226</x>
+      <y>689</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Place for extend for climate control, clock and so on</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
