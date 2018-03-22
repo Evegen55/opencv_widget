@@ -68,7 +68,7 @@ void MainWindow::openImageAsOpeCVFrame() {
         //get the label from mainwindow.ui source
         ui->labelForMessages->setText(text);
     } else {
-        qDebug() << QString("NO IMAGE %1").arg(fileName);
+        qWarning() << QString("Image %1 has no data or can't being read").arg(fileName);
     }
 
 }
@@ -114,7 +114,7 @@ void MainWindow::openImageAndShowInTab() {
         // resize the label to fit the image
         ui->labelForStaticPictures->resize(ui->labelForStaticPictures->pixmap()->size());
     } else {
-        qDebug() << QString("Image %1 has no data or can't being read").arg(fileName);
+        qWarning() << QString("Image %1 has no data or can't being read").arg(fileName);
     }
 }
 
@@ -132,7 +132,7 @@ cv::Mat MainWindow::flipImageInTab(cv::Mat image)
     // display on label
     ui->labelForStaticPictures->setPixmap(QPixmap::fromImage(img));
     // resize the label to fit the image
-//    ui->labelForStaticPictures->resize(ui->labelForStaticPictures->pixmap()->size());
+    //    ui->labelForStaticPictures->resize(ui->labelForStaticPictures->pixmap()->size());
     return result;
 }
 
@@ -203,7 +203,10 @@ int MainWindow::showColoredFrame() {
             break;
         }
         cv::imshow("frame", frame);
-        if(cv::waitKey(30) >= 0) break;
+        if(cv::waitKey(30) >= 0) {
+            qDebug() << QString("Stop grabbing from cam with deviceId %1 ").arg(deviceID + apiID);
+            break;
+        }
     }
 
     return 0;
@@ -214,23 +217,27 @@ int MainWindow::showColoredCamInTab() {
     cv::VideoCapture cap;
     int deviceID = 0;             // 0 = open default camera
     int apiID = cv::CAP_ANY;      // 0 = autodetect default API
-    cap.open(deviceID + apiID);
+    int combined_dev_id = deviceID + apiID;
+    cap.open(combined_dev_id);
     if(!cap.isOpened()) {
-        std::cerr << "ERROR! Unable to open camera\n";
+        qCritical() << QString("ERROR! Unable to open camera with deviceId %1 ").arg(combined_dev_id);
         return -1;
     }
-    qDebug() << QString("Start grabbing from cam with deviceId %1 ").arg(deviceID + apiID);
+    qDebug() << QString("Start grabbing from camera with deviceId %1 ").arg(combined_dev_id);
     ui->labelForMessages->setText("Start grabbing colored video\nPress any key to terminate");
 
     // resize the label to fit the image
     cv::Mat frame;
     cap >> frame; // get a new frame from camera
-    ui->labelForWebCamImages->resize(ui->labelForWebCamImages->pixmap()->size());
+    int frameWidth = frame.size().width;
+    int frameHight = frame.size().height;
+    ui->labelForWebCamImages->resize(frameWidth, frameHight);
+    qDebug() << QString("Window resized with width %1 and hight %2").arg(frameWidth).arg(frameWidth);
     for(;;) {
         cap >> frame; // get a new frame from camera
         // check if we succeeded
         if (frame.empty()) {
-            std::cerr << "ERROR! blank frame grabbed\n";
+            qWarning() << QString("ERROR! blank frame grabbed");
             ui->labelForMessages->setText("ERROR! blank frame grabbed\n");
             break;
         }
@@ -239,7 +246,10 @@ int MainWindow::showColoredCamInTab() {
         QImage imgFrame = QImage((const unsigned char*)(frame.data), frame.cols,frame.rows,QImage::Format_RGB888);
         // display on label with pre-defined size
         ui->labelForWebCamImages->setPixmap(QPixmap::fromImage(imgFrame));
-        if(cv::waitKey(30) >= 0) break;
+        if(cv::waitKey(30) >= 0) {
+            qDebug() << QString("Stop grabbing from cam with deviceId %1 ").arg(combined_dev_id);
+            break;
+        }
     }
     return 0;
 }
