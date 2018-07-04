@@ -38,11 +38,20 @@ FORMS += \
 RESOURCES += \
         fun.qrc
 
-INCLUDEPATH += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\include
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_core331.dll
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_highgui331.dll
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_imgcodecs331.dll
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_imgproc331.dll
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_calib3d331.dll
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_features2d331.dll
-LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_videoio331.dll
+win32:INCLUDEPATH += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\include
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_core331.dll
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_highgui331.dll
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_imgcodecs331.dll
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_imgproc331.dll
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_calib3d331.dll
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_features2d331.dll
+win32:LIBS += C:\Other_IT\opencv-3.3.1\for_experiments\build_3.3.1_with_qt_mingw_32_release\install\x86\mingw\bin\libopencv_videoio331.dll
+
+unix:INCLUDEPATH += /usr/local/include
+unix:LIBS += /usr/local/lib/libopencv_core.so.3.4.1
+unix:LIBS += /usr/local/lib/libopencv_highgui.so.3.4.1
+unix:LIBS += /usr/local/lib/libopencv_imgcodecs.so.3.4.1
+unix:LIBS += /usr/local/lib/libopencv_imgproc.so.3.4.1
+unix:LIBS += /usr/local/lib/libopencv_calib3d.so.3.4.1
+unix:LIBS += /usr/local/lib/libopencv_features2d.so.3.4.1
+unix:LIBS += /usr/local/lib/libopencv_videoio.so.3.4.1
