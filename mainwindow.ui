@@ -143,13 +143,29 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
      <attribute name="title">
       <string>Photos</string>
      </attribute>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QLabel" name="labelForStaticPictures">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>10</y>
-        <width>341</width>
-        <height>23</height>
+        <x>10</x>
+        <y>80</y>
+        <width>201</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="fun.qrc">:/images/patrik.jpg</pixmap>
+      </property>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>2</x>
+        <y>11</y>
+        <width>761</width>
+        <height>27</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -169,13 +185,13 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>40</y>
-        <width>341</width>
-        <height>23</height>
+        <x>2</x>
+        <y>41</y>
+        <width>761</width>
+        <height>27</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -195,66 +211,11 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
        </item>
       </layout>
      </widget>
-     <widget class="QLabel" name="labelForStaticPictures">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>80</y>
-        <width>201</width>
-        <height>301</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="fun.qrc">:/images/patrik.jpg</pixmap>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="tab_for_smart_things">
      <attribute name="title">
       <string>SmartScreen</string>
      </attribute>
-     <widget class="QPushButton" name="btn_show_cam">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>80</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Show Camera</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_canny_edges">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>10</y>
-        <width>80</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CannyEdges</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btn_show_cam_in_tab">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>10</y>
-        <width>111</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Show camera in tab</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="labelForMessages">
       <property name="geometry">
        <rect>
@@ -290,6 +251,52 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>20</y>
+        <width>761</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="btn_show_cam">
+         <property name="text">
+          <string>Show Camera</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_canny_edges">
+         <property name="text">
+          <string>CannyEdges</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_show_cam_in_tab">
+         <property name="text">
+          <string>Show camera in tab</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>418</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_for_settings">
      <attribute name="title">
@@ -323,7 +330,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
      <x>0</x>
      <y>0</y>
      <width>768</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

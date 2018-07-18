@@ -6,6 +6,7 @@
 #include "actions_with_images.h"
 
 #include <QFileDialog>
+#include <QInputDialog>
 
 #include <QtGlobal>
 #if QT_VERSION >= 0x050000
@@ -49,6 +50,13 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::openImageAsOpeCVFrame() {
+    //TODO move it
+    bool ok;
+    QString name = QInputDialog::getText(this, tr("Add task"), tr("Task name"), QLineEdit::Normal, tr("Untitled task"), &ok);
+    if (ok && !name.isEmpty()) {
+        qDebug() << "Adding new task " << name;
+    }
+
     //    cv::Mat image = cv::imread("../opencv_widget/images/sadeness.jpg", 1);
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.jpeg *.bmp)"));
     cv::Mat image = cv::imread(fileName.toStdString());
