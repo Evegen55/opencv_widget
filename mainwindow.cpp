@@ -165,7 +165,13 @@ void MainWindow::getVideoFromCamShowInTab() {
 void MainWindow::openJsonFromWeb()
 {    
     // We get the data, namely JSON file from a site on a particular url
-    networkManager->get(QNetworkRequest(QUrl("http://www.evileg.ru/it_example.json")));
+    QString URL = ui->line_edit_URL->text();
+    if (URL == nullptr) {
+        ui->textBrowser->append(QString("ERROR! Unable to open URL"));
+    } else {
+        networkManager->get(QNetworkRequest(QUrl(URL)));
+    }
+
 }
 
 void MainWindow::onJsonResult(QNetworkReply *reply)
@@ -183,8 +189,9 @@ void MainWindow::onJsonResult(QNetworkReply *reply)
              * Take away the name of the object on which we obtain its value
              * */
         if (!root.empty()) {
-            ui->textBrowser->append(root.keys().at(0) + ": " + root.value(root.keys().at(0)).toString());
+            ui->textBrowser->clear();
 
+            ui->textBrowser->append(root.keys().at(0) + ": " + root.value(root.keys().at(0)).toString());
             // The second value prescribe line
             QJsonValue jv = root.value("employees");
             // If the value is an array, ...

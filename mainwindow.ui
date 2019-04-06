@@ -168,10 +168,23 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>50</y>
+        <y>90</y>
         <width>381</width>
         <height>321</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="line_edit_URL">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>50</y>
+        <width>381</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>http://www.evileg.ru/it_example.json</string>
       </property>
      </widget>
     </widget>
