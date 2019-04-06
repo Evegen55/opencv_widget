@@ -50,10 +50,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->btn_flip_image, SIGNAL(clicked()),
             this, SLOT(on_btn_image_to_tab_clicked()));
 
-    networkManager = new QNetworkAccessManager();
+    networkManager = new QNetworkAccessManager(this);
     // Connect networkManager response to the handler
-    connect(ui->btn_open_json, SIGNAL(clicked()),
-            this, SLOT(openJsonFromWeb()));
+    connect(networkManager, &QNetworkAccessManager::finished, this, &MainWindow::onJsonResult);
+    // Connect button to open JSON API
+    connect(ui->btn_open_json, SIGNAL(clicked()), this, SLOT(openJsonFromWeb()));
 
 }
 
@@ -157,18 +158,18 @@ cv::Mat MainWindow::flipImageInTab(cv::Mat image)
 }
 
 
-
 void MainWindow::getVideoFromCamShowInTab() {
     showColoredCamInTab();
 }
 
 void MainWindow::openJsonFromWeb()
-{
-    QNetworkReply *reply;
-    //connect(networkManager, &QNetworkAccessManager::finished, this, SIGNAL(onResult()));
+{    
     // We get the data, namely JSON file from a site on a particular url
-    reply = networkManager->get(QNetworkRequest(QUrl("http://www.evileg.ru/it_example.json")));
+    networkManager->get(QNetworkRequest(QUrl("http://www.evileg.ru/it_example.json")));
+}
 
+void MainWindow::onJsonResult(QNetworkReply *reply)
+{
     // If there are no errors
     if(!reply->error()){
 
