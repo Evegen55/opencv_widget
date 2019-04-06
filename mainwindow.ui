@@ -14,7 +14,7 @@
    <string>Car media panel</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="tabs">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -122,7 +122,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
 }</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_for_navigation">
      <attribute name="title">
@@ -134,10 +134,46 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
       <string>Media Player</string>
      </attribute>
     </widget>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="tab_for_web">
      <attribute name="title">
       <string>Web</string>
      </attribute>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>761</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QPushButton" name="btn_open_json">
+         <property name="text">
+          <string>Open JSON file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_flip_image_2">
+         <property name="text">
+          <string>TODO</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>50</y>
+        <width>381</width>
+        <height>321</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_for_images">
      <attribute name="title">
@@ -147,7 +183,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>80</y>
+        <y>220</y>
         <width>201</width>
         <height>301</height>
        </rect>
@@ -159,7 +195,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
        <pixmap resource="fun.qrc">:/images/patrik.jpg</pixmap>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>2</x>
@@ -185,7 +221,7 @@ QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>2</x>

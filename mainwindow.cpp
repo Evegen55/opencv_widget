@@ -15,6 +15,13 @@
 #include <QtGui>
 #endif
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QUrlQuery>
+#include <QtNetwork/QNetworkReply>
+#include <QUrl>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
@@ -42,6 +49,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //flip image by clicking button
     connect(ui->btn_flip_image, SIGNAL(clicked()),
             this, SLOT(on_btn_image_to_tab_clicked()));
+
+    networkManager = new QNetworkAccessManager();
+    // Connect networkManager response to the handler
+    connect(ui->btn_open_json, SIGNAL(clicked()),
+            this, SLOT(openJsonFromWeb()));
 
 }
 
@@ -148,6 +160,53 @@ cv::Mat MainWindow::flipImageInTab(cv::Mat image)
 
 void MainWindow::getVideoFromCamShowInTab() {
     showColoredCamInTab();
+}
+
+void MainWindow::openJsonFromWeb()
+{
+    QNetworkReply *reply;
+    //connect(networkManager, &QNetworkAccessManager::finished, this, SIGNAL(onResult()));
+    // We get the data, namely JSON file from a site on a particular url
+    reply = networkManager->get(QNetworkRequest(QUrl("http://www.evileg.ru/it_example.json")));
+
+    // If there are no errors
+    if(!reply->error()){
+
+        // So create an object Json Document, by reading into it all the data from the response
+        QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+
+        // Taking from the document root object
+        QJsonObject root = document.object();
+        /* We find the object "departament", which is the very first in the root object.
+             * Use the keys() method gets a list of all objects and the first index
+             * Take away the name of the object on which we obtain its value
+             * */
+        if (!root.empty()) {
+            ui->textBrowser->append(root.keys().at(0) + ": " + root.value(root.keys().at(0)).toString());
+
+            // The second value prescribe line
+            QJsonValue jv = root.value("employees");
+            // If the value is an array, ...
+            if(jv.isArray()){
+                // ... then pick from an array of properties
+                QJsonArray ja = jv.toArray();
+                // Going through all the elements of the array ...
+                for(int i = 0; i < ja.count(); i++){
+                    QJsonObject subtree = ja.at(i).toObject();
+                    // Taking the values of the properties and last name by adding them to textEdit
+                    ui->textBrowser->append(subtree.value("firstName").toString() +
+                                            " " +
+                                            subtree.value("lastName").toString());
+                }
+            }
+            // At the end we take away the property of the number of employees of the department and also to output textEdit
+            ui->textBrowser->append(QString::number(root.value("number").toInt()));
+        } else {
+            ui->textBrowser->append(QString("NO DATA"));
+        }
+
+    }
+    reply->deleteLater();
 }
 
 int MainWindow::showCannyEdges() {

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <opencv2/opencv.hpp>
+#include <QtNetwork/QNetworkAccessManager>
 
 namespace Ui {
 class MainWindow;
@@ -13,12 +14,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     int showCannyEdges();
     int showColoredFrame();
-    int showColoredCamInTab();
+    int showColoredCamInTab();    
     
 public slots:
     void openImageAsOpeCVFrame();
@@ -28,15 +29,17 @@ public slots:
     void showFrameWithCannyEdges();    
     void getVideoFromCamShowInTab();
     //void showFlippedImage(cv::Mat image);
-
+    //Открываем JSON по клику кнопки
+    void openJsonFromWeb();
 
 private slots:
-    void on_btn_image_to_tab_clicked();
+    void on_btn_image_to_tab_clicked();    
 
 private:
     cv::Mat flipImageInTab(cv::Mat image);
     Ui::MainWindow *ui;
     cv::Mat imageForActionsInTab;
+    QNetworkAccessManager *networkManager;
 };
 
 #endif // MAINWINDOW_H
